@@ -1,2 +1,2 @@
-# test_site
+# Blog site
 test site to study Spring Boot
