@@ -47,4 +47,13 @@ public class Items {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Items() {
+    }
+
+    public Items(int num, double price, String name) {
+        this.num = num;
+        this.price = price;
+        this.name = name;
+    }
 }

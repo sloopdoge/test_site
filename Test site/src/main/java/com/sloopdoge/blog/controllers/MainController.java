@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
 
-    @Autowired
-    private ItemsRepository itemsRepository;
+    private final ItemsRepository itemsRepository;
+
+    public MainController(ItemsRepository itemsRepository) {
+        this.itemsRepository = itemsRepository;
+    }
 
     /* Controller for HOME PAGE*/
     @GetMapping("/")
@@ -56,5 +61,16 @@ public class MainController {
         return "sign_up";
     }
 
+    /* Controller for Page to add item in database*/
+    @GetMapping("/products/add")
+    public String item(Model model) {
+        return "item_add";
+    }
 
+    @PostMapping("/products/add")
+    public String item_add(@RequestParam int num, @RequestParam double price, @RequestParam String name, Model model) {
+        Items item = new Items(num, price, name);
+        itemsRepository.save(item);
+        return "refresh";
+    }
 }
