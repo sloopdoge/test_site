@@ -30,5 +30,17 @@ public class MainController {
         model.addAttribute("title", "About us");
         return "about";
     }
+    /* Controller for Login PAGE*/
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("title", "Login page");
+        return "login";
+    }
+    /* Controller for Sign up PAGE*/
+    @GetMapping("/sign_up")
+    public String sign_up(Model model) {
+        model.addAttribute("title", "Sign up page");
+        return "sign_up";
+    }
 
 }
