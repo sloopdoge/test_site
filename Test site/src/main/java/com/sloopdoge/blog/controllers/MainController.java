@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 
-    private final ItemsRepository itemsRepository;
-
-    public MainController(ItemsRepository itemsRepository) {
-        this.itemsRepository = itemsRepository;
-    }
+    private ItemsRepository itemsRepository;
 
     /* Controller for HOME PAGE*/
     @GetMapping("/")
