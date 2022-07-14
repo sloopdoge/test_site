@@ -5,22 +5,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/* Class for receiving and transferring data from a database  */
 @Entity
 public class Items {
 
+    /* Every element in database will have unique id */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     private int num;
     private double price;
     private String name;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -48,9 +50,11 @@ public class Items {
         this.name = name;
     }
 
+    /* Empty constructor */
     public Items() {
     }
 
+    /* Constructor to save elements */
     public Items(int num, double price, String name) {
         this.num = num;
         this.price = price;

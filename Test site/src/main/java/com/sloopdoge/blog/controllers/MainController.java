@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MainController {
@@ -20,13 +21,6 @@ public class MainController {
     public String home(Model model) {
         model.addAttribute("title", "Home");
         return "home";
-    }
-
-    /* Controller for Dashboard PAGE*/
-    @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        model.addAttribute("title", "Dashboard");
-        return "dashboard";
     }
 
     /* Controller for Products PAGE*/
@@ -65,9 +59,18 @@ public class MainController {
     }
 
     @PostMapping("/products/add")
-    public String item_add(@RequestParam int num, @RequestParam double price, @RequestParam String name, Model model) {
-        Items item = new Items(num, price, name);
+    public @ResponseBody String item_add(@RequestParam int num, @RequestParam double price, @RequestParam String name, Model model) {
+        Items item = new Items();
+        item.setNum(num);
+        item.setPrice(price);
+        item.setName(name);
         itemsRepository.save(item);
         return "refresh";
+    }
+
+    @GetMapping(path="/all")
+    public @ResponseBody Iterable<Items> getAllItems() {
+        // This returns a JSON or XML with the users
+        return itemsRepository.findAll();
     }
 }
