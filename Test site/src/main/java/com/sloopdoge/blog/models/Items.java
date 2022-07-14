@@ -12,33 +12,33 @@ public class Items {
     /* Every element in database will have unique id */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
-    private int num;
-    private double price;
+    private Integer num;
+    private Double price;
     private String name;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -55,7 +55,7 @@ public class Items {
     }
 
     /* Constructor to save elements */
-    public Items(int num, double price, String name) {
+    public Items(Integer num, Double price, String name) {
         this.num = num;
         this.price = price;
         this.name = name;

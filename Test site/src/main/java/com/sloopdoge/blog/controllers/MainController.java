@@ -54,23 +54,27 @@ public class MainController {
 
     /* Controller for Page to add item in database*/
     @GetMapping("/products/add")
-    public String item(Model model) {
+    public String item(@RequestParam(name = "num", required = false) Integer num, @RequestParam(name = "price", required = false) Double price, @RequestParam(name = "name", required = false) String name, Model model) {
+        Items item = new Items(num, price, name);
+//        item.setNum(num);
+//        item.setPrice(price);
+//        item.setName(name);
+        itemsRepository.save(item);
         return "item_add";
     }
 
-    @PostMapping("/products/add")
-    public @ResponseBody String item_add(@RequestParam int num, @RequestParam double price, @RequestParam String name, Model model) {
-        Items item = new Items();
-        item.setNum(num);
-        item.setPrice(price);
-        item.setName(name);
-        itemsRepository.save(item);
-        return "refresh";
-    }
+//    @PostMapping("/products/add")
+//    public @ResponseBody String item_add(@RequestParam int num, @RequestParam double price, @RequestParam String name, Model model) {
+//        Items item = new Items();
+//        item.setNum(num);
+//        item.setPrice(price);
+//        item.setName(name);
+//        itemsRepository.save(item);
+//        return "home";
+//    }
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Items> getAllItems() {
-        // This returns a JSON or XML with the users
         return itemsRepository.findAll();
     }
 }
