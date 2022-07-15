@@ -1,0 +1,35 @@
+BD
+Items:
+    id - unique number for product
+    name - product description
+    price - cost of 1 product
+    image - photo of product
+
+Category's:
+-------------
+User:
+    id -  unique number for user
+    username - first and second name
+    email - email of user
+    password - password of account
+    role - to determine the level of access to the site
+
+Role:
+    user - registered user
+    guest - not registered user
+    admin - admin to control workability of site
+    manager - worker of site
+
+Order:
+    id -  unique number for order
+    createdDate - date of creating this order
+    changeDate - date of last change in this order
+    user - who created this order
+    address - where to send address
+    status(new, canceled, paid, closed) - status of this order
+
+Cart:
+    id -  unique number for cart
+    user - who have this cart
+    details - id's of products in cart, amount, price
+
