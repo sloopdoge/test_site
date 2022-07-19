@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -13,11 +13,7 @@ public class User {
     private String email;
     private String password;
     private boolean active;
-
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private String role;
 
     public Long getId() {
         return id;
@@ -59,20 +55,22 @@ public class User {
         this.active = active;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public User() {
+    public MyUser() {
     }
 
-    public User(String username, String email, String password) {
+    public MyUser(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
     }
+
+
 }

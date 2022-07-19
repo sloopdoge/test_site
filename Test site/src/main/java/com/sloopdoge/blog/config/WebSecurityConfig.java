@@ -1,27 +1,41 @@
 package com.sloopdoge.blog.config;
 
+import com.sloopdoge.blog.models.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private DataSource dataSource;
+
+//    @Autowired
+//    private CustomUserDetailsService userDetailsService;
+//
+//    @Autowired
+//    private CustomAuthenticationConfig authenticationConfig;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/sign_up").permitAll()
+//                    .antMatchers("/products/add/**").hasRole("ADMIN")
+                    .antMatchers("/", "/sign_up", "/products/**").permitAll()
+                    .antMatchers("/about").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -29,16 +43,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .logout()
-                    .permitAll();
+                    .permitAll()
+                .and().rememberMe();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select username, password, active from user where username=?")
-                .authoritiesByUsernameQuery("select user.username, role.roles from user you inner join user_role on user.id = user_role.user_id where user.username=?");
+                .usersByUsernameQuery(
+                        "select login, password, 'true' from my_user " +
+                                "where login=?")
+                .authoritiesByUsernameQuery(
+                        "select login, authority from my_user " +
+                                "where login=?");
+//        auth.userDetailsService(userDetailsService);
+//        auth.authenticationProvider(authenticationConfig);
     }
 
 //    @Bean

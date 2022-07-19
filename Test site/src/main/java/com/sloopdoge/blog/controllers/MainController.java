@@ -38,8 +38,8 @@ public class MainController {
         return "about";
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<Items> getAllItems() {
-        return itemsRepository.findAll();
-    }
+//    @GetMapping(path="/all")
+//    public @ResponseBody Iterable<Items> getAllItems() {
+//        return itemsRepository.findAll();
+//    }
 }

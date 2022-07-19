@@ -1,8 +1,10 @@
 package com.sloopdoge.blog.repo;
 
-import com.sloopdoge.blog.models.User;
+import com.sloopdoge.blog.models.MyUser;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends CrudRepository<User, Long> {
-    User findUserByEmail(String email);
+@Repository
+public interface UserRepository extends CrudRepository<MyUser, Long> {
+    MyUser findUserByEmail(String email);
 }

@@ -1,7 +1,7 @@
 package com.sloopdoge.blog.controllers;
 
+import com.sloopdoge.blog.models.MyUser;
 import com.sloopdoge.blog.models.Role;
-import com.sloopdoge.blog.models.User;
 import com.sloopdoge.blog.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
-import java.util.Set;
 
 @Controller
 public class SignUpController {
@@ -21,25 +20,28 @@ public class SignUpController {
 
     /* Controller for Sign up PAGE*/
     @GetMapping("/sign_up")
-    public String sign_up(@RequestParam(name = "username", required = false) String username,
-                          @RequestParam(name = "email", required = false) String email,
-                          @RequestParam(name = "password", required = false) String password,
-                          User user, Model model) {
+    public String sign_up(Model model) {
         model.addAttribute("title", "Sign up page");
-
-        User userFromDb = userRepository.findUserByEmail(user.getEmail());
-
-        if (userFromDb != null) {
-            System.out.println("User exists!");
-            return "redirect:/login";
-        }
-
-        User newUser = new User(username, email, password);
-        newUser.setActive(true);
-        newUser.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(newUser);
-
         return "sign_up";
     }
 
+    @PostMapping("/sign_up")
+    public String addUser(MyUser myUser,
+                          @RequestParam(name = "username") String username,
+                          @RequestParam(name = "email") String email,
+                          @RequestParam(name = "password") String password) {
+        MyUser myUserFromDb = userRepository.findUserByEmail(myUser.getEmail());
+
+        if (myUserFromDb != null) {
+            System.out.println("message" + "User exists!");
+            return "redirect:/login";
+        }
+
+        MyUser newMyUser = new MyUser(username, email, password);
+        newMyUser.setActive(true);
+        newMyUser.setRole(String.valueOf(Role.USER));
+        userRepository.save(newMyUser);
+
+        return "redirect:/login";
+    }
 }
