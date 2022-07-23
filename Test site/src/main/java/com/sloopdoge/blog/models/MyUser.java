@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "my_user")
 public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +13,11 @@ public class MyUser {
     private String email;
     private String password;
     private boolean active;
-    private String role;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> role;
 
     public Long getId() {
         return id;
@@ -55,11 +59,11 @@ public class MyUser {
         this.active = active;
     }
 
-    public String getRole() {
+    public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Set<Role> role) {
         this.role = role;
     }
 

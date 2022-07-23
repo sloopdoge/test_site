@@ -52,11 +52,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "select login, password, 'true' from my_user " +
-                                "where login=?")
+                        "select email, password, active from my_user where email=?")
                 .authoritiesByUsernameQuery(
-                        "select login, authority from my_user " +
-                                "where login=?");
+                        "select my_user.email, user_role.role from my_user " +
+                                "inner join user_role on my_user.id = user_role.id where my_user.email=?");
 //        auth.userDetailsService(userDetailsService);
 //        auth.authenticationProvider(authenticationConfig);
     }

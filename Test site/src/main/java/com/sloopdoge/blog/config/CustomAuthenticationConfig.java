@@ -34,7 +34,7 @@ public class CustomAuthenticationConfig implements AuthenticationProvider {
         UserDetails thisUser = User.builder()
                 .username(myUser.getEmail())
                 .password(myUser.getPassword())
-                .roles(myUser.getRole())
+                .roles(String.valueOf(myUser.getRole()))
                 .build();
 
         return new UsernamePasswordAuthenticationToken(thisUser, password, thisUser.getAuthorities());

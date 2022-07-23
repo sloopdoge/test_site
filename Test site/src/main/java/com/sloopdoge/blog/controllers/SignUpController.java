@@ -33,13 +33,13 @@ public class SignUpController {
         MyUser myUserFromDb = userRepository.findUserByEmail(myUser.getEmail());
 
         if (myUserFromDb != null) {
-            System.out.println("message" + "User exists!");
-            return "redirect:/login";
+            System.out.println("_ERROR_: " + "User exists!");
+            return "sign_up";
         }
 
         MyUser newMyUser = new MyUser(username, email, password);
         newMyUser.setActive(true);
-        newMyUser.setRole(String.valueOf(Role.USER));
+        newMyUser.setRole(Collections.singleton(Role.USER));
         userRepository.save(newMyUser);
 
         return "redirect:/login";

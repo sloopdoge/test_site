@@ -7,7 +7,7 @@ Items:
 
 Category's:
 -------------
-User:
+MyUser:
     id -  unique number for myUser
     username - first and second name
     email - email of myUser
@@ -15,21 +15,21 @@ User:
     role - to determine the level of access to the site
 
 Role:
-    myUser - registered myUser
-    guest - not registered myUser
-    admin - admin to control workability of site
-    manager - worker of site
+    USER - registered myUser
+    GUEST - not registered myUser
+    ADMIN - admin to control workability of site
+    MANAGER - worker of site
 
 Order:
     id -  unique number for order
     createdDate - date of creating this order
     changeDate - date of last change in this order
-    myUser - who created this order
+    userId - who created this order
     address - where to send address
     status(new, canceled, paid, closed) - status of this order
 
 Cart:
     id -  unique number for cart
-    myUser - who have this cart
+    userId - who have this cart
     details - id's of products in cart, amount, price
 
